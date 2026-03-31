@@ -1,0 +1,72 @@
+[
+    {
+        "model": "productos.producto",
+        "pk": 1,
+        "fields": {
+            "nombre": "Zenbook Pro Duo 15",
+            "descripcion": "Laptop con doble pantalla táctil OLED, procesador i9 de 12a generación y RTX 3080. Ideal para creadores de contenido.",
+            "precio": "2999.99",
+            "stock": 15,
+            "categoria": "Notebooks",
+            "imagen_url": "https://placehold.co/600x400/292524/c4b5fd?text=Zenbook+Pro+Duo",
+            "fecha_creacion": "2024-01-01T12:00:00Z",
+            "fecha_actualizacion": "2024-01-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "productos.producto",
+        "pk": 2,
+        "fields": {
+            "nombre": "Galaxy S24 Ultra",
+            "descripcion": "El último smartphone insignia con IA integrada, cámara de 200MP y S Pen. Marco de titanio ultrarresistente.",
+            "precio": "1299.00",
+            "stock": 50,
+            "categoria": "Smartphones",
+            "imagen_url": "https://placehold.co/600x400/292524/86efac?text=Galaxy+S24+Ultra",
+            "fecha_creacion": "2024-01-02T10:30:00Z",
+            "fecha_actualizacion": "2024-01-02T10:30:00Z"
+        }
+    },
+    {
+        "model": "productos.producto",
+        "pk": 3,
+        "fields": {
+            "nombre": "iPad Air M2",
+            "descripcion": "Tablet de alto rendimiento con diseño ligero y compatibilidad con Apple Pencil Pro. Pantalla Liquid Retina.",
+            "precio": "599.00",
+            "stock": 30,
+            "categoria": "Tablets",
+            "imagen_url": "https://placehold.co/600x400/292524/fca5a5?text=iPad+Air+M2",
+            "fecha_creacion": "2024-01-03T15:45:00Z",
+            "fecha_actualizacion": "2024-01-03T15:45:00Z"
+        }
+    },
+    {
+        "model": "productos.producto",
+        "pk": 4,
+        "fields": {
+            "nombre": "Sony WH-1000XM5",
+            "descripcion": "Auriculares inalámbricos con la mejor cancelación de ruido del mercado. Confortables y con batería de 30 horas.",
+            "precio": "349.99",
+            "stock": 100,
+            "categoria": "Accesorios",
+            "imagen_url": "https://placehold.co/600x400/292524/93c5fd?text=Sony+XM5",
+            "fecha_creacion": "2024-01-04T08:15:00Z",
+            "fecha_actualizacion": "2024-01-04T08:15:00Z"
+        }
+    },
+    {
+        "model": "productos.producto",
+        "pk": 5,
+        "fields": {
+            "nombre": "MacBook Air M3",
+            "descripcion": "La laptop portátil más popular del mundo, ahora superpotenciada con el chip M3 para un rendimiento ultrarrápido sin ventilador.",
+            "precio": "1099.00",
+            "stock": 0,
+            "categoria": "Notebooks",
+            "imagen_url": "https://placehold.co/600x400/292524/fde047?text=MacBook+Air+M3",
+            "fecha_creacion": "2024-01-05T09:00:00Z",
+            "fecha_actualizacion": "2024-01-05T09:00:00Z"
+        }
+    }
+]

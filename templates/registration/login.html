@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="col-md-5">
+        <div class="card product-card p-4">
+            <div class="card-body text-center">
+                <i class="fa-solid fa-user-lock fa-3x mb-3" style="color: var(--accent-purple);"></i>
+                <h3 class="card-title mb-4">Acceso de Usuario</h3>
+
+                {% if form.errors %}
+                <div class="alert alert-danger p-2 mb-4" style="background-color: var(--bg-main); border-color: var(--accent-red); color: var(--accent-red);">
+                    <small>Usuario o contraseña incorrectos. Por favor, intenta de nuevo.</small>
+                </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3 text-start">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Nombre de Usuario</label>
+                        {{ form.username }}
+                        <script>
+                            document.getElementById("{{ form.username.id_for_label }}").classList.add("form-control");
+                        </script>
+                    </div>
+
+                    <div class="mb-4 text-start">
+                        <label for="{{ form.password.id_for_label }}" class="form-label">Contraseña</label>
+                        {{ form.password }}
+                        <script>
+                            document.getElementById("{{ form.password.id_for_label }}").classList.add("form-control");
+                        </script>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary-custom btn-lg">
+                            <i class="fa-solid fa-right-to-bracket me-2"></i> Ingresar
+                        </button>
+                    </div>
+                    
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </form>
+
+                <div class="mt-4 pt-3 border-top" style="border-color: var(--border-color) !important;">
+                    <p class="mb-0 text-secondary">¿No tienes cuenta? <a href="{% url 'registro' %}" style="color: var(--accent-blue);">Regístrate aquí</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Productos Tecnológicos{% endblock %}
+
+{% block content %}
+<div class="row align-items-center mb-4">
+    <div class="col-8">
+        <h1 class="mb-0"><i class="fa-solid fa-laptop-code me-2"></i>Catálogo de Productos</h1>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="col-4 text-end">
+        <a href="{% url 'producto_create' %}" class="btn btn-primary-custom">
+            <i class="fa-solid fa-plus me-1"></i> Añadir
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+{% if productos %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for producto in productos %}
+    <div class="col">
+        <!-- Targeta (Card) para el producto -->
+        <div class="card product-card h-100">
+            {% if producto.imagen_url %}
+                <img src="{{ producto.imagen_url }}" class="card-img-top" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover; background-color: var(--bg-main);">
+            {% else %}
+                <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background-color: var(--bg-main);">
+                    <i class="fa-solid fa-image fa-3x text-secondary"></i>
+                </div>
+            {% endif %}
+            
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title mb-0">{{ producto.nombre }}</h5>
+                    <span class="badge" style="background-color: var(--accent-purple); color: var(--bg-main)">{{ producto.categoria }}</span>
+                </div>
+                <p class="card-text text-truncate">{{ producto.descripcion }}</p>
+                <div class="mt-auto d-flex justify-content-between align-items-center">
+                    <span class="price-tag">${{ producto.precio }}</span>
+                    <span>
+                        {% if producto.stock > 0 %}
+                            <span class="badge text-bg-success-custom" style="background-color: var(--accent-green); color: var(--bg-main)">Stock: {{ producto.stock }}</span>
+                        {% else %}
+                            <span class="badge text-bg-danger-custom" style="background-color: var(--accent-red); color: var(--bg-main)">Agotado</span>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            {% if user.is_authenticated %}
+            <div class="card-footer" style="background-color: var(--bg-main); border-top: 1px solid var(--border-color);">
+                <div class="d-flex justify-content-between">
+                     <a href="{% url 'producto_detail' producto.pk %}" class="btn btn-sm btn-info-custom" title="Ver Detalles">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
+                    <div>
+                        <a href="{% url 'producto_update' producto.pk %}" class="btn btn-sm btn-outline-custom me-1" title="Editar">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <form method="post" action="{% url 'producto_delete' producto.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger-custom btn-delete-confirm" title="Eliminar">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <!-- Fin Card -->
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="row mt-5">
+    <div class="col-12 text-center text-secondary">
+        <i class="fa-solid fa-box-open fa-3x mb-3"></i>
+        <h3>No hay productos disponibles por el momento.</h3>
+        {% if user.is_authenticated %}
+            <a href="{% url 'producto_create' %}" class="btn btn-primary-custom mt-3">¡Crea el primero!</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

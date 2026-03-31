@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Registro de Usuario{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center mb-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card product-card p-4">
+            <div class="card-body">
+                <div class="text-center">
+                    <i class="fa-solid fa-user-plus fa-3x mb-3" style="color: var(--accent-green);"></i>
+                    <h3 class="card-title mb-4">Crear una Cuenta</h3>
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger p-2 mb-4" style="background-color: var(--bg-main); border-color: var(--accent-red); color: var(--accent-red);">
+                    {% for error in form.non_field_errors %}
+                        <small>{{ error }}</small><br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'registro' %}">
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            
+                            <!-- Inyectar class form-control via JS básico para campos generados automáticamente por form.as_p o iterador -->
+                            {{ field }}
+                            <script>
+                                document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
+                            </script>
+
+                            {% if field.help_text %}
+                                <div class="form-text mt-1 text-secondary" style="font-size: 0.8rem;">
+                                    {{ field.help_text|safe }}
+                                </div>
+                            {% endif %}
+                            
+                            {% if field.errors %}
+                                <div class="form-text text-danger mt-1" style="color: var(--accent-red) !important;">
+                                    {% for error in field.errors %}
+                                        {{ error|escape }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <div class="d-grid mt-4 pt-3">
+                        <button type="submit" class="btn btn-success-custom btn-lg">
+                            <i class="fa-solid fa-check me-2"></i> Registrarse
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-4 text-center border-top pt-3" style="border-color: var(--border-color) !important;">
+                    <p class="mb-0 text-secondary">¿Ya tienes una cuenta? <a href="{% url 'login' %}" style="color: var(--accent-blue);">Inicia sesión</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

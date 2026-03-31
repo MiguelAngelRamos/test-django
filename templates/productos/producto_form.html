@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}Editar {{ object.nombre }}{% else %}Añadir Producto{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="p-4" style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px;">
+            <h2 class="mb-4 text-center">
+                {% if object %}
+                    <i class="fa-solid fa-pen-to-square me-2" style="color: var(--accent-blue);"></i>Editar Producto
+                {% else %}
+                    <i class="fa-solid fa-plus-circle me-2" style="color: var(--accent-green);"></i>Nuevo Producto
+                {% endif %}
+            </h2>
+
+            <!-- Django Form Validation Errors (Non-field) -->
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert" style="background-color: var(--bg-main); color: var(--accent-red); border-color: var(--accent-red);">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="{{ form.nombre.id_for_label }}" class="form-label">Nombre</label>
+                        {{ form.nombre }}
+                        {% if form.nombre.errors %}
+                            <div class="form-text text-danger" style="color: var(--accent-red) !important;">{{ form.nombre.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="{{ form.categoria.id_for_label }}" class="form-label">Categoría</label>
+                        {{ form.categoria }}
+                        {% if form.categoria.errors %}
+                            <div class="form-text text-danger" style="color: var(--accent-red) !important;">{{ form.categoria.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="{{ form.descripcion.id_for_label }}" class="form-label">Descripción</label>
+                        {{ form.descripcion }}
+                        {% if form.descripcion.errors %}
+                            <div class="form-text text-danger" style="color: var(--accent-red) !important;">{{ form.descripcion.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="{{ form.precio.id_for_label }}" class="form-label">Precio ($)</label>
+                        {{ form.precio }}
+                        {% if form.precio.errors %}
+                            <div class="form-text text-danger" style="color: var(--accent-red) !important;">{{ form.precio.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="{{ form.stock.id_for_label }}" class="form-label">Stock (Unidades)</label>
+                        {{ form.stock }}
+                        {% if form.stock.errors %}
+                            <div class="form-text text-danger" style="color: var(--accent-red) !important;">{{ form.stock.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="{{ form.imagen_url.id_for_label }}" class="form-label">URL de Imagen (Opcional)</label>
+                        {{ form.imagen_url }}
+                        <div class="form-text" style="color: var(--text-secondary);">Agrega un enlace para mostrar el producto.</div>
+                        {% if form.imagen_url.errors %}
+                            <div class="form-text text-danger" style="color: var(--accent-red) !important;">{{ form.imagen_url.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'producto_list' %}" class="btn btn-outline-custom">Cancelar</a>
+                    <button type="submit" class="btn btn-primary-custom">
+                        <i class="fa-solid fa-save me-1"></i> Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
