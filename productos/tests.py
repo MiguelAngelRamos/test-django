@@ -33,3 +33,28 @@ class ProductoModelTest(TestCase):
 
         with self.assertRaises(ValidationError):
             producto_invalido.full_clean()
+
+    def test_stock_invalido_lanza_error(self):
+        producto_invalido = Producto(
+            nombre="Mouse Gamer",                   # nombre válido (>= 3 chars)
+            descripcion="Mouse genérico inalámbrico.",  # descripción válida (>= 10 chars)
+            precio= 100,                            # precio válido (>= 0.01)
+            stock=-10,                                # ← INVÁLIDO: viola MinValueValidator(0)
+            categoria="Accesorios"                   # categoría válida
+        )
+
+        with self.assertRaises(ValidationError):
+            producto_invalido.full_clean()
+
+
+    def test_nombre_corto_lanza_error(self):
+        producto_invalido = Producto(
+            nombre="Mo",                   # ← INVÁLIDO: viola MinLengthValidator(3)
+            descripcion="Mouse genérico inalámbrico.",  # descripción válida (>= 10 chars)
+            precio= 100,                            # precio válido (>= 0.01)
+            stock=10,                                # stock válido (>= 0)
+            categoria="Accesorios"                   # categoría válida
+        )
+
+        with self.assertRaises(ValidationError):
+            producto_invalido.full_clean()
