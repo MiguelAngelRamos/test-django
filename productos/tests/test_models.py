@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Producto
+from productos.models import Producto
 from django.core.exceptions import ValidationError
 # Create your tests here.
 class ProductoModelTest(TestCase):
