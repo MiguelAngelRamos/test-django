@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import Producto
+from django.core.exceptions import ValidationError
 # Create your tests here.
 class ProductoModelTest(TestCase):
     
@@ -20,3 +21,15 @@ class ProductoModelTest(TestCase):
         resultado = str(producto)
         esperado = "Teclado Mecánico (Accesorios)"
         self.assertEqual(resultado, esperado)
+
+    def test_precio_invalido_lanza_error(self):
+        producto_invalido = Producto(
+            nombre="Mouse Gamer",                   # nombre válido (>= 3 chars)
+            descripcion="Mouse genérico inalámbrico.",  # descripción válida (>= 10 chars)
+            precio=-5.00,                            # ← INVÁLIDO: viola MinValueValidator(0.01)
+            stock=10,                                # stock válido (>= 0)
+            categoria="Accesorios"                   # categoría válida
+        )
+
+        with self.assertRaises(ValidationError):
+            producto_invalido.full_clean()
