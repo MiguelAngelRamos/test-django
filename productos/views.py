@@ -24,6 +24,7 @@ class ProductoCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('producto_list')
     success_message = "Producto '%(nombre)s' creado exitosamente."
     
+    
 class ProductoUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Producto
     form_class = ProductoForm
