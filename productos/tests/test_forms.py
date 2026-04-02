@@ -36,3 +36,18 @@ class ProductoFormTest(TestCase):
         self.assertFalse(form.is_valid(), msg=f"Errores esperados: {form.errors}")
         self.assertIn('nombre', form.errors)
         # self.assertIn("El nombre debe tener al menos 3 caracteres reales.", form.errors['nombre'][0])
+
+
+    def test_precio_negativo_es_invalido(self):
+        datos = {**DATOS_VALIDOS, 'precio': -10.00}
+        form = ProductoForm(data=datos)
+        self.assertFalse(form.is_valid(), msg=f"Errores esperados: {form.errors}")
+        self.assertIn('precio', form.errors)
+        self.assertIn("El precio debe ser un valor positivo y mayor a cero.", form.errors['precio'][0])
+
+    def test_stock_negativo_es_invalido(self):
+        datos = {**DATOS_VALIDOS, 'stock': -5}
+        form = ProductoForm(data=datos)
+        self.assertFalse(form.is_valid(), msg=f"Errores esperados: {form.errors}")
+        self.assertIn('stock', form.errors)
+        self.assertIn("El stock no puede ser un número negativo.", form.errors['stock'][0])
